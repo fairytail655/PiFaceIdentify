@@ -1,7 +1,7 @@
 import cv2
 import os
 
-cascade_path = os.path.realpath('haarcascade_frontalface_default.xml')
+cascade_path = os.path.realpath('~/haarcascade_frontalface_default.xml')
 faceCascade = cv2.CascadeClassifier(cascade_path)
 
 cap = cv2.VideoCapture(0)
