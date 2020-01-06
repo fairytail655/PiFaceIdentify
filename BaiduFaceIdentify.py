@@ -141,8 +141,8 @@ class BaiduFaceIdentify:
 if __name__ == "__main__":
     recongnizer = BaiduFaceIdentify()
     # res = recongnizer.face_check('others_1.jpg')
-    res = recongnizer.face_search('me_0.jpg')
-    # res = recongnizer.face_login('me_0.jpg', userId='ZhongWei')
+    res = recongnizer.face_search('img/detected_face_0.jpg')
+    # res = recongnizer.face_login('me.jpg', userId='ZhongWei')
     # if res_check:
     # res = recongnizer.face_update('me_1.jpg')
     # else:
