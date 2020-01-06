@@ -1,6 +1,5 @@
 import base64
 from aip import AipFace
-import sys
 
 class BaiduFaceIdentify:
     """基于百度 API 的人脸识别类"""
@@ -141,12 +140,12 @@ class BaiduFaceIdentify:
 if __name__ == "__main__":
     recongnizer = BaiduFaceIdentify()
     # res = recongnizer.face_check('others_1.jpg')
-    res = recongnizer.face_search('img/detected_face_0.jpg')
+    # res = recongnizer.face_search('img/detected_face_0.jpg')
     # res = recongnizer.face_login('me.jpg', userId='ZhongWei')
     # if res_check:
     # res = recongnizer.face_update('me_1.jpg')
     # else:
     #     res_update = None
     # res = recongnizer.get_user_list()
-    # res = recongnizer.delete_user()
+    # res = recongnizer.delete_user(userId='ZhongWei')
     print(res)

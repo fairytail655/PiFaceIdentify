@@ -17,7 +17,7 @@ class Email(object):
         </html>
         '''
     """
-    def __init__(self, smtp_server, from_addr, password, to_addr, type, title, content, photo_path):
+    def __init__(self, smtp_server, from_addr, password, to_addr, type, title, content, images_path_list):
         self.smtp_server = smtp_server
         self.from_addr = from_addr
         self.password = password
@@ -25,7 +25,7 @@ class Email(object):
         self.type = type
         self.title = title
         self.content = content
-        self.photo_path = photo_path
+        self.images_path_list = images_path_list
 
     # 1 创建邮箱(写好邮件内容 发送人 收件人和标题等)
     def msg(self):
@@ -40,18 +40,25 @@ class Email(object):
         # 收件人昵称和邮箱,可以写成 formataddr(('Bruce Lin', from_addr))
         msg_root['To'] = formataddr((self.to_addr, self.to_addr))
         msg_root['Subject'] = self.title
-        # 指定图片为当前目录
-        fp = open(self.photo_path, 'rb')
-        msgImage = MIMEImage(fp.read())
-        fp.close()
-        # 定义图片 ID，在 HTML 文本中引用
-        msgImage.add_header('Content-ID', '<image1>')
-        msg_root.attach(msgImage)
-
+        # 邮件正文
         msg_alternative = MIMEMultipart('alternative')
-        msg_alternative.attach(MIMEText(self.content, 'html', 'utf-8'))
-
+        msg_alternative.attach(MIMEText(self.content, self.type, 'utf-8'))
         msg_root.attach(msg_alternative)
+        # 邮件附件
+        for image_path in self.images_path_list:
+            with open(image_path, 'rb') as fp:
+                image_data = fp.read()
+            image = MIMEImage(image_data, _subtype='octet-stream')
+            image.add_header('Content-Disposition', 'attachment', filename=image_path)
+            msg_root.attach(image)
+
+        # # 指定图片为当前目录
+        # fp = open(self.photo_path, 'rb')
+        # msgImage = MIMEImage(fp.read())
+        # fp.close()
+        # # 定义图片 ID，在 HTML 文本中引用
+        # msgImage.add_header('Content-ID', '<image1>')
+        # msg_root.attach(msgImage)
 
         return msg_root
 
@@ -86,16 +93,15 @@ if __name__ == '__main__':
     mail_msg = """
     <p>Python 邮件发送测试...</p>
     <p>图片演示：</p>
-    <p><img src="cid:image1"></p>
     """
     email = Email(
         smtp_server='smtp.163.com',
         from_addr='fox_benjiaming@163.com',
         password='Kaisa9130',
         to_addr='2623538943@qq.com',
-        type='plain',
+        type='html',
         title='邮件发送实验',
         content=mail_msg,
-        photo_path='test.png'
+        images_path_list=['img/detected_face_0.jpg', 'img/detected_face_1.jpg']
     )
     print(email.send_msg())
