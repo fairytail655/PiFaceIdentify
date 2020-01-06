@@ -12,18 +12,23 @@ class ThreadSearchFace(threading.Thread):
         self.face_flag = True
 
     def run(self) -> None:
-        check_res = self.identify.face_check(self.image_path)
-        if check_res:
-            self.face_flag = True
-            search_res = self.identify.face_search(self.image_path)
-            print(search_res)
-            if search_res['error_code'] == 0:
-                self.find_flag = True
+        try:
+            check_res = self.identify.face_check(self.image_path)
+            if check_res:
+                self.face_flag = True
+                search_res = self.identify.face_search(self.image_path)
+                print(search_res)
+                if search_res['error_code'] == 0:
+                    self.find_flag = True
+                else:
+                    self.find_flag = False
             else:
+                self.face_flag = False
                 self.find_flag = False
-        else:
+        except:
             self.face_flag = False
             self.find_flag = False
+
 
 class ThreadSendEmai(threading.Thread):
     def __init__(self):
@@ -33,7 +38,7 @@ class ThreadSendEmai(threading.Thread):
     def run(self) -> None:
         mail_msg = """
         <p>警告，检测到陌生人，请注意！</p>
-        <p>陌生人照片</p>
+        <p>陌生人照片在附件中</p>
         """
         self.email = Email(
             smtp_server='smtp.163.com',
@@ -45,4 +50,7 @@ class ThreadSendEmai(threading.Thread):
             content=mail_msg,
             images_path_list=self.images_path_list
         )
-        print(self.email.send_msg())
+        try:
+            print(self.email.send_msg())
+        except:
+            print('邮件发送失败')
