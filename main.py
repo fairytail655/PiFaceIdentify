@@ -6,7 +6,7 @@ from threads import ThreadSearchFace, ThreadSendEmai
 cascade_path = os.path.realpath('haarcascade_frontalface_default.xml')
 faceCascade = cv2.CascadeClassifier(cascade_path)
 
-cap = cv2.VideoCapture(2)
+cap = cv2.VideoCapture(0)
 cap.set(3, 640)  # set Width
 cap.set(4, 480)  # set Height
 
@@ -122,11 +122,11 @@ while True:
             time_end_flag = True
             print('时间到了')
 
-    cv2.imshow('img', img_show)
+    # cv2.imshow('img', img_show)
 
-    k = cv2.waitKey(10) & 0xff
-    if k == 27:  # press 'ESC' to quit
-        break
+    # k = cv2.waitKey(10) & 0xff
+    # if k == 27:  # press 'ESC' to quit
+    #     break
 
-cap.release()
-cv2.destroyAllWindows()
+# cap.release()
+# cv2.destroyAllWindows()
