@@ -23,7 +23,7 @@ class BaiduFaceIdentify:
         """ 带参数调用人脸检测 """
         if not options:
             """ 如果没有可选参数 """
-            options = {"face_field": "age", "max_face_num": 10}
+            options = {"face_field": "age", "max_face_num": 3}
             res = self.client.detect(image, imageType, options)
         else:
             res = self.client.detect(image, imageType)

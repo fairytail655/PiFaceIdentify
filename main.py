@@ -34,7 +34,7 @@ while True:
         gray,
         scaleFactor=1.2,
         minNeighbors=5,
-        minSize=(20, 20)
+        minSize=(40, 40)
     )
     # 如果检测到人脸
     if len(faces):
@@ -122,11 +122,11 @@ while True:
             time_end_flag = True
             print('时间到了')
 
-    # cv2.imshow('img', img_show)
-
-    # k = cv2.waitKey(10) & 0xff
-    # if k == 27:  # press 'ESC' to quit
-    #     break
-
+#     cv2.imshow('img', img_show)
+#
+#     k = cv2.waitKey(10) & 0xff
+#     if k == 27:  # press 'ESC' to quit
+#         break
+#
 # cap.release()
 # cv2.destroyAllWindows()
